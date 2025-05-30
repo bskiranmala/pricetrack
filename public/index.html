@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Stock Price Tracker</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    h1 { margin-bottom: 30px; }
+    table { margin: auto; width: 50%; border-collapse: collapse; }
+    th, td { border: 1px solid #ccc; padding: 10px; font-size: 18px; }
+    th { background-color: #f4f4f4; }
+  </style>
+</head>
+<body>
+  <h1>📈 Real-Time Stock Price Tracker</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Stock</th>
+        <th>Price (USD)</th>
+      </tr>
+    </thead>
+    <tbody id="stockTable">
+      <tr><td>AAPL</td><td id="AAPL">$0.00</td></tr>
+      <tr><td>GOOGL</td><td id="GOOGL">$0.00</td></tr>
+      <tr><td>MSFT</td><td id="MSFT">$0.00</td></tr>
+    </tbody>
+  </table>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    socket.on('price update', (data) => {
+      for (let stock in data) {
+        document.getElementById(stock).textContent = '$' + data[stock];
+      }
+    });
+  </script>
+</body>
+</html>
